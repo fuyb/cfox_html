@@ -4,8 +4,11 @@ import PlayButton from './button'
 export default class Player extends React.Component {
     constructor(props) {
         super(props);
+        this.prev = this.prev.bind(this);
+        this.next = this.next.bind(this);
+        this.play = this.play.bind(this);
         this.state = {
-            source: null,
+            start: false,
             playState: false,
             index: 0,
             playList: [
@@ -22,33 +25,94 @@ export default class Player extends React.Component {
                     url:'https://develop.yanbin.me/music/binv.mp3',
                 }
             ]
-        }
+        };
+    }
+
+    componentDidMount() {
+        this.audio.addEventListener('ended', () => this.next());
+        this.audio.addEventListener('timeupdate', () => this.progress());
+    }
+
+    progress() {
+        //console.log(this.audio.duration);
+        //console.log(`transform: scaleX(${this.audio.currentTime / this.audio.duration})`);
+    }
+
+    prev() {
+        this.playNext(-1);
+        /*
+        this.setState({
+            index: this.state.index > 0 ? this.state.index - 1 : 0,
+        }, () => this.play());
+        */
+    }
+
+    next() {
+        this.playNext(1);
+        /*
+        this.setState({
+            index: this.state.index < this.state.playList.length - 1 ? this.state.index + 1 : 0,
+        }, () => this.play());
+        */
+    }
+
+    playNext(delta) {
+        this.setState(({index, playList}) => ({
+            index: Math.max(0, Math.min(playList.length - 1, index + delta))
+        }), () => this.play());
     }
 
     play() {
-        let index = this.state.index;
-        const item = this.state.playList[index];
+        const item = this.state.playList[this.state.index];
         this.source.src = item.url;
         this.source.type = item.type;
         this.audio.load();
         this.audio.play();
-        index = index < this.state.playList.length - 1 ? index + 1 : 0;
         this.setState({
-            playState: !this.state.playState,
-            index: index,
+            playState: true,
+            start: true,
         });
+    }
+
+    pause() {
+        this.audio.pause();
+        this.setState({
+            playState: false,
+        });
+    }
+
+    onPlayClick() {
+        if (this.state.playState === true) {
+            this.pause();
+        } else {
+            if (this.state.start === false) {
+                this.play()
+            } else {
+                this.audio.play();
+                this.setState({
+                    playState: true,
+                });
+            }
+        }
     }
 
     render() {
         return (
             <div>
             <PlayButton 
+             value="PREV"
+             onClick={() => this.prev()} 
+            />
+            <PlayButton 
              value="PLAY"
-             onClick={() => this.play()} 
+             onClick={() => this.onPlayClick()} 
+            />
+            <PlayButton 
+             value="NEXT"
+             onClick={() => this.next()} 
             />
             <audio 
              ref={(audio) => {this.audio = audio}}
-             onEnded={() => this.play()}
             >
                 <source 
                  ref={(source) => {this.source = source}}
