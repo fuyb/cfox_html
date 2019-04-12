@@ -15,20 +15,29 @@ export default class Player extends React.Component {
             completed: 0,
             currentTime: '00:00',
             totalTime: '00:00',
+            currentMusic: {},
             playList: [
                 {
+                    name: '活着——尘肺工人生命之歌',
+                    artist: '今晚吃鱼丸',
                     type: 'audio/mpeg',
                     url: 'https://develop.yanbin.me/music/huozhe.mp3',
                 },
                 {
+                    name: 'Mad Bad Cat',
+                    artist: '17 Hippies',
                     type: 'audio/flac',
                     url:'https://develop.yanbin.me/music/mad-bad.flac',
                 },
                 {
+                    name: '彼女は革命家',
+                    artist: '頭脳警察',
                     type: 'audio/mpeg',
                     url:'https://develop.yanbin.me/music/binv.mp3',
                 },
                 {
+                    name: '丝绸之路',
+                    artist: '中央民族乐团',
                     type: 'audio/webM',
                     url:'https://develop.yanbin.me/music/sczl.opus',
                 }
@@ -92,14 +101,15 @@ export default class Player extends React.Component {
             return;
         }
 
-        const item = this.state.playList[this.state.index];
-        this.source.src = item.url;
-        this.source.type = item.type;
-        this.audio.load();
-        this.audio.play();
-        this.setState({
+        this.setState(({index, playList}) => ({
             playState: true,
             already: true,
+            currentMusic: this.state.playList[this.state.index],
+        }), () => {
+            this.source.src = this.state.currentMusic.url;
+            this.source.type = this.state.currentMusic.type;
+            this.audio.load();
+            this.audio.play();
         });
     }
 
@@ -161,8 +171,8 @@ export default class Player extends React.Component {
             <PlayerContainer 
              playState={this.state.playState}
              buttons={buttons} 
-             songName='xxxx' 
-             artist='yyyy'
+             songName={this.state.currentMusic.name}
+             artist={this.state.currentMusic.artist}
              currentTime={this.state.currentTime}
              totalTime={'-' + this.state.totalTime}
              audio={audio}
