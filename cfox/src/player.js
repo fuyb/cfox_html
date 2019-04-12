@@ -1,6 +1,6 @@
 import React from 'react'
-import {PlayButton} from './button'
-import {ProgressLine} from './button'
+import {PlayerButton} from './ui'
+import {PlayerContainer} from './ui'
 
 export default class Player extends React.Component {
     constructor(props) {
@@ -54,7 +54,8 @@ export default class Player extends React.Component {
             completed: this.audio.currentTime / this.audio.duration * 100,
             currentTime: this.formatTime(this.audio.currentTime),
             totalTime: this.formatTime(
-                this.audio.duration - (this.audio.currentTime ? this.audio.currentTime : 0)),
+                (this.audio.duration ? this.audio.duration : 0) - 
+                (this.audio.currentTime ? this.audio.currentTime : 0)),
         });
     }
 
@@ -109,42 +110,62 @@ export default class Player extends React.Component {
         });
     }
 
+    createButton(id, childId) {
+    }
+
     render() {
+        const buttons = [
+             <PlayerButton 
+              name='random'
+              key='random'
+              styleName='random_btn'
+              childId='random-child'
+              childStyleName='glyphicon-random'
+              onClick={() => this.prev()}/>,
+             <PlayerButton 
+              name='prev'
+              key='prev'
+              styleName='prev_btn'
+              childId='prev-child'
+              childStyleName='glyphicon-backward'
+              onClick={() => this.prev()}/>,
+             <PlayerButton 
+              name='play'
+              key='play'
+              styleName='play_btn'
+              childId='play_circle'
+              childStyleName='glyphicon-play'
+              onClick={() => this.play()}/>,
+             <PlayerButton 
+              name='next'
+              key='next'
+              styleName='next_btn'
+              childId='play-child'
+              childStyleName='glyphicon-forward'
+              onClick={() => this.next()}/>,
+             <PlayerButton 
+              name='repeat'
+              key='repeat'
+              styleName='repeat_btn'
+              childId='repeat-child'
+              childStyleName='glyphicon-retweet'
+              onClick={() => this.next()}/>,
+        ];
+        const source = React.createElement('source', {
+            ref:(source) => {this.source = source}
+        });
+        const audio = React.createElement('audio', {
+            ref:(audio) => {this.audio = audio}
+        }, source);
         return (
-            <div>
-            <div>
-            <PlayButton 
-             value="PREV"
-             onClick={() => this.prev()} 
+            <PlayerContainer 
+             buttons={buttons} 
+             songName='xxxx' 
+             artist='yyyy'
+             currentTime={this.state.currentTime}
+             totalTime={'-' + this.state.totalTime}
+             audio={audio}
             />
-            <PlayButton 
-             value="PLAY"
-             onClick={() => this.play()} 
-            />
-            <PlayButton 
-             value="NEXT"
-             onClick={() => this.next()} 
-            />
-            </div>
-            <div>
-            <ProgressLine completed={this.state.completed} />
-            </div>
-            <div>
-            <audio 
-             ref={(audio) => {this.audio = audio}} 
-            >
-                <source 
-                 ref={(source) => {this.source = source}}
-                />
-            </audio>
-            </div>
-            <PlayButton 
-             value={this.state.currentTime}
-            />
-            <PlayButton 
-             value={'-' + this.state.totalTime}
-            />
-            </div>
         );
     }
 };
