@@ -76,6 +76,14 @@ export default class Player extends React.Component {
         this.playNext(1);
     }
 
+    random() {
+        this.setState(({index, playList, already, playState}) => ({
+            index: Math.floor(Math.random() * this.state.playList.length),
+            already: false,
+            playState: false,
+        }), () => this.play());
+    }
+
     playNext(delta) {
         this.setState(({index, playList, already, playState}) => ({
             index: Math.max(0, Math.min(playList.length - 1, index + delta)),
@@ -131,7 +139,7 @@ export default class Player extends React.Component {
               styleName='random_btn'
               childId='random-child'
               childStyleName='glyphicon-random'
-              onClick={() => this.prev()}/>,
+              onClick={() => this.random()}/>,
              <PlayerButton 
               name='prev'
               key='prev'
