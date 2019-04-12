@@ -76,20 +76,23 @@ export default class Player extends React.Component {
         this.playNext(1);
     }
 
-    random() {
-        this.setState(({index, playList, already, playState}) => ({
-            index: Math.floor(Math.random() * this.state.playList.length),
+    ready() {
+        this.setState(() => ({
             already: false,
             playState: false,
         }), () => this.play());
     }
 
+    random() {
+        this.setState(({index, playList, already, playState}) => ({
+            index: Math.floor(Math.random() * this.state.playList.length),
+        }), () => this.ready());
+    }
+
     playNext(delta) {
         this.setState(({index, playList, already, playState}) => ({
             index: Math.max(0, Math.min(playList.length - 1, index + delta)),
-            already: false,
-            playState: false,
-        }), () => this.play());
+        }), () => this.ready());
     }
 
     play() {
