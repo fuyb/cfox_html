@@ -53,7 +53,8 @@ export default class Player extends React.Component {
         this.setState({
             completed: this.audio.currentTime / this.audio.duration * 100,
             currentTime: this.formatTime(this.audio.currentTime),
-            totalTime: this.formatTime(this.audio.duration - this.audio.currentTime ? this.audio.currentTime : 0),
+            totalTime: this.formatTime(
+                this.audio.duration - (this.audio.currentTime ? this.audio.currentTime : 0)),
         });
     }
 
