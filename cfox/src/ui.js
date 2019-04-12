@@ -1,16 +1,17 @@
 import React from 'react';
-import './player.css'
+import './css/ui.css'
 
 export const PlayerButton = (props) => {
     return (
-        <div className={"col-xs-" + (props.id === 'play' ? "3" : "2")}>
+        <div className={"col-xs-" + (props.name === "play" ? "3" : "2")}>
             <div 
-             className="play_btn text-center" 
-             key={props.id} 
-             data-action='play'>
+             className={props.styleName + " text-center"}
+             id={props.name}
+             data-action={props.name}>
                 <span 
-                 className="glyphicon glyphicon-play" 
-                 key={props.child.id} 
+                 onClick={props.onClick}
+                 id={props.childId}
+                 className={"glyphicon " + props.childStyleName}
                  aria-hidden="true">
                 </span>
             </div>
@@ -115,6 +116,7 @@ export const PlayerContainer = (props) => {
              <SongInfo songName={props.songName} artist={props.artist} />
              <ProgressLineWarp totalTime={props.totalTime} currentTime={props.currentTime} />
              <PlayerButtonContainer buttons={props.buttons} />
+             {props.audio}
         </div>
     );
 };
