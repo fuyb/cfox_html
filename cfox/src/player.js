@@ -128,9 +128,6 @@ export default class Player extends React.Component {
         });
     }
 
-    createButton(id, childId) {
-    }
-
     render() {
         const buttons = [
              <PlayerButton 
