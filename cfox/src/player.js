@@ -153,6 +153,8 @@ export default class Player extends React.Component {
               styleName='play_btn'
               childId='play_circle'
               childStyleName='glyphicon-play'
+              childPauseStyleName='glyphicon-pause'
+              playSate={this.state.playState}
               onClick={() => this.play()}/>,
              <PlayerButton 
               name='next'

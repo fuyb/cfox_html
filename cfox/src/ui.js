@@ -1,6 +1,14 @@
 import React from 'react';
 import './css/ui.css'
 
+const getStyleName = (props) => {
+    if (props.name === "play") {
+        return "glyphicon " + (props.playSate ?  props.childStyleName : props.childPauseStyleName);
+    } else {
+        return "glyphicon " + props.childStyleName;
+    }
+}
+
 export const PlayerButton = (props) => {
     return (
         <div className={"col-xs-" + (props.name === "play" ? "3" : "2")}>
@@ -11,7 +19,7 @@ export const PlayerButton = (props) => {
              data-action={props.name}>
                 <span 
                  id={props.childId}
-                 className={"glyphicon " + props.childStyleName}
+                 className={getStyleName(props)}
                  aria-hidden="true">
                 </span>
             </div>
