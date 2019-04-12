@@ -99,7 +99,7 @@ export const PlayerHeader = (props) => {
                 </div>
                 <div className="col-xs-8">
                     <div className="header_name text-center" id="nowPlay">
-                        <span key="npAction">PAUSED...</span>
+                        <span key="npAction">{props.playState ? "PLAY..." : "PAUSE..."}</span>
                     </div>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export const PlayerHeader = (props) => {
 export const PlayerContainer = (props) => {
     return (
         <div className="player_content">
-             <PlayerHeader />
+             <PlayerHeader playState={props.playState} />
              <Album />
              <SongInfo songName={props.songName} artist={props.artist} />
              <ProgressLineWarp totalTime={props.totalTime} currentTime={props.currentTime} />

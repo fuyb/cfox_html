@@ -159,6 +159,7 @@ export default class Player extends React.Component {
         }, source);
         return (
             <PlayerContainer 
+             playState={this.state.playState}
              buttons={buttons} 
              songName='xxxx' 
              artist='yyyy'
