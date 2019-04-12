@@ -5,11 +5,11 @@ export const PlayerButton = (props) => {
     return (
         <div className={"col-xs-" + (props.name === "play" ? "3" : "2")}>
             <div 
+             onClick={props.onClick}
              className={props.styleName + " text-center"}
              id={props.name}
              data-action={props.name}>
                 <span 
-                 onClick={props.onClick}
                  id={props.childId}
                  className={"glyphicon " + props.childStyleName}
                  aria-hidden="true">
