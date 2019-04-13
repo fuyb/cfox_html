@@ -49,7 +49,7 @@ export const ProgressLine = React.forwardRef((props, ref) => (
     </div>
 ));
 
-export const TimeLine = (props) => {
+export const TimeOfSong = (props) => {
     return (
         <div className="time_of_song">
             <div className="container-fluid">
@@ -70,7 +70,7 @@ export const ProgressLineWarp = (props) => {
     return (
       <div className="timeline_wrap">
           {props.progressLine}
-          <TimeLine totalTime={props.totalTime} currentTime={props.currentTime} />
+          <TimeOfSong totalTime={props.totalTime} currentTime={props.currentTime} />
       </div>
     );
 };
