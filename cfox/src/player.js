@@ -26,30 +26,14 @@ export default class Player extends React.Component {
                     artist: '今晚吃鱼丸',
                     type: 'audio/mpeg',
                     url: 'https://t2.yanbin.me/music/huozhe.mp3',
-                },
-                {
-                    name: 'Mad Bad Cat',
-                    artist: '17 Hippies',
-                    type: 'audio/flac',
-                    url:'https://t2.yanbin.me/music/mad-bad.flac',
-                },
-                {
-                    name: '彼女は革命家',
-                    artist: '頭脳警察',
-                    type: 'audio/mpeg',
-                    url:'https://t2.yanbin.me/music/binv.mp3',
-                },
-                {
-                    name: '丝绸之路',
-                    artist: '中央民族乐团',
-                    type: 'audio/webM',
-                    url:'https://t2.yanbin.me/music/sczl.opus',
+                    album: 'https://t2.yanbin.me/assets/huozhe.png',
                 },
                 {
                     name: 'Tuvan Internationale.mp3',
                     artist: 'Huun-Huur-Tu',
                     type: 'audio/mpeg',
                     url:'https://t2.yanbin.me/music/Tuvan-Internationale.mp3',
+                    album: 'https://t2.yanbin.me/assets/communism.jpg',
                 }
             ]
         };
@@ -234,6 +218,7 @@ export default class Player extends React.Component {
              buttons={buttons} 
              songName={this.state.currentMusic.name}
              artist={this.state.currentMusic.artist}
+             thumb={this.state.currentMusic.album}
              completed={this.state.completed}
              currentTime={this.state.currentTime}
              totalTime={'-' + this.state.totalTime}
