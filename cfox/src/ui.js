@@ -93,7 +93,7 @@ export const Album = (props) => {
     return (
         <div className="album_wrap">
             <div className="no_album_img">
-                <div className="jAudio--thumb">
+                <div className="jAudio--thumb" style={{backgroundImage: "url(" + props.thumb + ")"}}>
                 </div>
             </div>
         </div>
@@ -123,7 +123,7 @@ export const PlayerContainer = (props) => {
     return (
         <div className="player_content">
              <PlayerHeader playState={props.playState} />
-             <Album />
+             <Album thumb={props.thumb}/>
              <SongInfo songName={props.songName} artist={props.artist} />
              <ProgressLineWarp 
               progressLine={props.progressLine}
