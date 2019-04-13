@@ -1,6 +1,7 @@
 import React from 'react'
 import {PlayerButton} from './ui'
 import {PlayerContainer} from './ui'
+import {ProgressLine} from './ui'
 
 export default class Player extends React.Component {
     constructor(props) {
@@ -21,31 +22,31 @@ export default class Player extends React.Component {
                     name: '活着——尘肺工人生命之歌',
                     artist: '今晚吃鱼丸',
                     type: 'audio/mpeg',
-                    url: '/music/huozhe.mp3',
+                    url: 'https://t2.yanbin.me/music/huozhe.mp3',
                 },
                 {
                     name: 'Mad Bad Cat',
                     artist: '17 Hippies',
                     type: 'audio/flac',
-                    url:'/music/mad-bad.flac',
+                    url:'https://t2.yanbin.me/music/mad-bad.flac',
                 },
                 {
                     name: '彼女は革命家',
                     artist: '頭脳警察',
                     type: 'audio/mpeg',
-                    url:'/music/binv.mp3',
+                    url:'https://t2.yanbin.me/music/binv.mp3',
                 },
                 {
                     name: '丝绸之路',
                     artist: '中央民族乐团',
                     type: 'audio/webM',
-                    url:'/music/sczl.opus',
+                    url:'https://t2.yanbin.me/music/sczl.opus',
                 },
                 {
                     name: 'Tuvan Internationale.mp3',
                     artist: 'Huun-Huur-Tu',
                     type: 'audio/mpeg',
-                    url:'/music/Tuvan-Internationale.mp3',
+                    url:'https://t2.yanbin.me/music/Tuvan-Internationale.mp3',
                 }
             ]
         };
@@ -142,6 +143,35 @@ export default class Player extends React.Component {
         });
     }
 
+    positionHandle(position) {
+    }
+
+    mouseMove(e) {
+        const bodyRect = document.body.getBoundingClientRect();
+        const elemRect = this.progressLine.current.getBoundingClientRect();
+        const offset   = elemRect.left - bodyRect.left;
+        const length = elemRect.right - elemRect.left;
+        this.audio.currentTime = ((e.clientX - offset) / length) * this.audio.duration;
+    }
+
+    mouseUpd() {
+        window.removeEventListener('mousemove', this.mouseMove);
+        window.removeEventListener('mouseup', this.mouseUp);
+    }
+
+    mouseDown() {
+        window.addEventListener('mousemove', this.mouseMove);
+        window.addEventListener('mouseup', this.mouseUp);
+    }
+
+    createProgressLine(ref) {
+        return <ProgressLine 
+                ref={ref} 
+                completed={this.state.completed}
+                mouseMove={(e) => this.mouseMove(e)}
+               />
+    }
+
     render() {
         const buttons = [
              <PlayerButton 
@@ -182,12 +212,16 @@ export default class Player extends React.Component {
               childStyleName='glyphicon-retweet'
               onClick={() => this.next()}/>,
         ];
+
         const source = React.createElement('source', {
             ref:(source) => {this.source = source}
         });
         const audio = React.createElement('audio', {
             ref:(audio) => {this.audio = audio}
         }, source);
+
+        this.progressLine = React.createRef();
+
         return (
             <PlayerContainer 
              playState={this.state.playState}
@@ -197,6 +231,7 @@ export default class Player extends React.Component {
              completed={this.state.completed}
              currentTime={this.state.currentTime}
              totalTime={'-' + this.state.totalTime}
+             progressLine={this.createProgressLine(this.progressLine)}
              audio={audio}
             />
         );

@@ -39,17 +39,15 @@ export const PlayerButtonContainer = (props) => {
     );
 };
 
-export const ProgressLine = (props) => {
-    return (
-        <div className="timeline progress-bar-wrapper">
-            <div className="full_line"></div>
-            <div className="line_preload"></div>
-            <div className="line_played" style={{width: props.completed + '%'}}>
-                <span className="progress-bar-pointer"></span>
-            </div>
+export const ProgressLine = React.forwardRef((props, ref) => (
+    <div className="timeline progress-bar-wrapper" ref={ref} onClick={props.mouseMove}>
+        <div className="full_line"></div>
+        <div className="line_preload"></div>
+        <div className="line_played" style={{width: props.completed + '%'}}>
+            <span className="progress-bar-pointer"></span>
         </div>
-    );
-};
+    </div>
+));
 
 export const TimeLine = (props) => {
     return (
@@ -71,7 +69,7 @@ export const TimeLine = (props) => {
 export const ProgressLineWarp = (props) => {
     return (
       <div className="timeline_wrap">
-          <ProgressLine completed={props.completed} />
+          {props.progressLine}
           <TimeLine totalTime={props.totalTime} currentTime={props.currentTime} />
       </div>
     );
@@ -123,7 +121,7 @@ export const PlayerContainer = (props) => {
              <Album />
              <SongInfo songName={props.songName} artist={props.artist} />
              <ProgressLineWarp 
-              completed={props.completed}
+              progressLine={props.progressLine}
               totalTime={props.totalTime}
               currentTime={props.currentTime} />
              <PlayerButtonContainer buttons={props.buttons} />
