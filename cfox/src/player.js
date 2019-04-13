@@ -21,25 +21,25 @@ export default class Player extends React.Component {
                     name: '活着——尘肺工人生命之歌',
                     artist: '今晚吃鱼丸',
                     type: 'audio/mpeg',
-                    url: 'https://develop.yanbin.me/music/huozhe.mp3',
+                    url: '/music/huozhe.mp3',
                 },
                 {
                     name: 'Mad Bad Cat',
                     artist: '17 Hippies',
                     type: 'audio/flac',
-                    url:'https://develop.yanbin.me/music/mad-bad.flac',
+                    url:'/mad-bad.flac',
                 },
                 {
                     name: '彼女は革命家',
                     artist: '頭脳警察',
                     type: 'audio/mpeg',
-                    url:'https://develop.yanbin.me/music/binv.mp3',
+                    url:'/music/binv.mp3',
                 },
                 {
                     name: '丝绸之路',
                     artist: '中央民族乐团',
                     type: 'audio/webM',
-                    url:'https://develop.yanbin.me/music/sczl.opus',
+                    url:'/music/sczl.opus',
                 }
             ]
         };
@@ -48,6 +48,8 @@ export default class Player extends React.Component {
     componentDidMount() {
         this.audio.addEventListener('ended', () => this.next());
         this.audio.addEventListener('timeupdate', () => this.progress());
+        this.audio.addEventListener('error', (e) => this.error(e));
+        this.audio.addEventListener('abort', (e) => this.error(e));
     }
 
     formatTime(currentTime) {
@@ -56,6 +58,10 @@ export default class Player extends React.Component {
         min = min < 10 ? '0' + min : min;
         sec = sec < 10 ? '0' + sec : sec;
         return `${min}:${sec}`;
+    }
+
+    error(e) {
+        this.next();
     }
 
     progress() {
