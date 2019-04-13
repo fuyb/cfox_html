@@ -9,6 +9,9 @@ export default class Player extends React.Component {
         this.prev = this.prev.bind(this);
         this.next = this.next.bind(this);
         this.play = this.play.bind(this);
+        this.mouseMove = this.mouseMove.bind(this);
+        this.mouseDown = this.mouseDown.bind(this);
+        this.mouseUp = this.mouseUp.bind(this);
         this.state = {
             already: false,
             playState: false,
@@ -151,7 +154,9 @@ export default class Player extends React.Component {
         const elemRect = this.progressLine.current.getBoundingClientRect();
         const offset   = elemRect.left - bodyRect.left;
         const length = elemRect.right - elemRect.left;
-        this.audio.currentTime = ((e.clientX - offset) / length) * this.audio.duration;
+        if (this.audio && this.audio.duration) {
+            this.audio.currentTime = ((e.clientX - offset) / length) * this.audio.duration;
+        }
     }
 
     mouseUp() {
@@ -168,6 +173,7 @@ export default class Player extends React.Component {
         return <ProgressLine 
                 ref={ref} 
                 completed={this.state.completed}
+                mouseDown={(e) => this.mouseDown(e)}
                 mouseMove={(e) => this.mouseMove(e)}
                />
     }

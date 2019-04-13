@@ -40,12 +40,17 @@ export const PlayerButtonContainer = (props) => {
 };
 
 export const ProgressLine = React.forwardRef((props, ref) => (
-    <div className="timeline progress-bar-wrapper" ref={ref} onClick={props.mouseMove}>
+    <div className="timeline progress-bar-wrapper" 
+        ref={ref} 
+        onClick={props.mouseMove}
+        onMouseDown={props.mouseDown}>
+
         <div className="full_line"></div>
         <div className="line_preload"></div>
         <div className="line_played" style={{width: props.completed + '%'}}>
             <span className="progress-bar-pointer"></span>
         </div>
+
     </div>
 ));
 
