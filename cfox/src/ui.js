@@ -44,7 +44,7 @@ export const ProgressLine = (props) => {
         <div className="timeline progress-bar-wrapper">
             <div className="full_line"></div>
             <div className="line_preload"></div>
-            <div className="line_played">
+            <div className="line_played" style={{width: props.completed + '%'}}>
                 <span className="progress-bar-pointer"></span>
             </div>
         </div>
@@ -71,7 +71,7 @@ export const TimeLine = (props) => {
 export const ProgressLineWarp = (props) => {
     return (
       <div className="timeline_wrap">
-          <ProgressLine />
+          <ProgressLine completed={props.completed} />
           <TimeLine totalTime={props.totalTime} currentTime={props.currentTime} />
       </div>
     );
@@ -122,7 +122,10 @@ export const PlayerContainer = (props) => {
              <PlayerHeader playState={props.playState} />
              <Album />
              <SongInfo songName={props.songName} artist={props.artist} />
-             <ProgressLineWarp totalTime={props.totalTime} currentTime={props.currentTime} />
+             <ProgressLineWarp 
+              completed={props.completed}
+              totalTime={props.totalTime}
+              currentTime={props.currentTime} />
              <PlayerButtonContainer buttons={props.buttons} />
              {props.audio}
         </div>

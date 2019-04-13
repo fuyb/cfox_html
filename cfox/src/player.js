@@ -60,7 +60,7 @@ export default class Player extends React.Component {
 
     progress() {
         this.setState({
-            completed: this.audio.currentTime / this.audio.duration * 100,
+            completed: Math.round(this.audio.currentTime * (100 / this.audio.duration)),
             currentTime: this.formatTime(this.audio.currentTime),
             totalTime: this.formatTime(
                 (this.audio.duration ? this.audio.duration : 0) - 
@@ -183,6 +183,7 @@ export default class Player extends React.Component {
              buttons={buttons} 
              songName={this.state.currentMusic.name}
              artist={this.state.currentMusic.artist}
+             completed={this.state.completed}
              currentTime={this.state.currentTime}
              totalTime={'-' + this.state.totalTime}
              audio={audio}
