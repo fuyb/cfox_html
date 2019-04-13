@@ -40,6 +40,12 @@ export default class Player extends React.Component {
                     artist: '中央民族乐团',
                     type: 'audio/webM',
                     url:'/music/sczl.opus',
+                },
+                {
+                    name: 'Tuvan Internationale.mp3',
+                    artist: 'Huun-Huur-Tu',
+                    type: 'audio/mpeg',
+                    url:'/music/Tuvan-Internationale.mp3',
                 }
             ]
         };
@@ -96,7 +102,7 @@ export default class Player extends React.Component {
 
     playNext(delta) {
         this.setState(({index, playList, already, playState}) => ({
-            index: Math.max(0, Math.min(playList.length - 1, index + delta)),
+            index: Math.max(0, Math.min(playList.length - 1, (index + delta) >= playList.length ? 0 : (index + delta))),
         }), () => this.ready());
     }
 
