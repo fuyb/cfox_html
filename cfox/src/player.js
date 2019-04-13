@@ -27,7 +27,7 @@ export default class Player extends React.Component {
                     name: 'Mad Bad Cat',
                     artist: '17 Hippies',
                     type: 'audio/flac',
-                    url:'/mad-bad.flac',
+                    url:'/music/mad-bad.flac',
                 },
                 {
                     name: '彼女は革命家',
@@ -61,7 +61,6 @@ export default class Player extends React.Component {
     }
 
     error(e) {
-        this.next();
     }
 
     progress() {
