@@ -154,7 +154,7 @@ export default class Player extends React.Component {
         this.audio.currentTime = ((e.clientX - offset) / length) * this.audio.duration;
     }
 
-    mouseUpd() {
+    mouseUp() {
         window.removeEventListener('mousemove', this.mouseMove);
         window.removeEventListener('mouseup', this.mouseUp);
     }
