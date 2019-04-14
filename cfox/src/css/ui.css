@@ -557,3 +557,29 @@
 	-webkit-animation: eq 1.2s ease-in-out infinite .6s;
 	        animation: eq 1.2s ease-in-out infinite .6s;
 }
+
+.lrc {
+  list-style-type: none;
+  margin: auto;
+  padding: 10px;
+  width:50%;
+  text-align: center;
+}
+
+.lrc_li {
+  font-size: 14px;
+  font-weight: 300;
+  margin: -1px 0;
+  color: rgba(128, 128, 128, .9);
+}
+
+.lrc_current_line {
+  color: rgba(50, 50, 50, .9);
+}
+
+.lrc_beta {
+  font-size: 12px;
+  font-weight: 300;
+  margin: -1px 0;
+  color: rgba(50, 50, 50, .9);
+}

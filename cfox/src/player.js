@@ -19,6 +19,8 @@ export default class Player extends React.Component {
             completed: 0,
             currentTime: '00:00',
             totalTime: '00:00',
+            lrcs: null,
+            currentLRC: '',
             currentMusic: {},
             playList: [
                 {
@@ -27,6 +29,7 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url: 'https://m.yanbin.me/music/huozhe.mp3',
                     album: 'https://m.yanbin.me/assets/huozhe.png',
+                    lrc: '/assets/huozhe.lrc',
                 },
                 {
                     name: 'Tuvan Internationale',
@@ -34,6 +37,7 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/Tuvan-Internationale.mp3',
                     album: 'https://m.yanbin.me/assets/communism.jpg',
+                    lrc: 'https://t2.yanbin.me/huozhe.lrc',
                 },
                 {
                     name: '卡尔',
@@ -41,6 +45,7 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/kar.mp3',
                     album: 'https://m.yanbin.me/assets/kar.jpg',
+                    lrc: '/assets/huozhe.lrc',
                 }
             ]
         };
@@ -70,14 +75,57 @@ export default class Player extends React.Component {
     error(e) {
     }
 
+    loadLRC(url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = (event) => {
+            const lines = xhr.response.split('\n');
+            let lrcs = new Map();
+            lines.forEach((line, _) => {
+                re = /\[\d+:\d+\.\d+\]/g;
+                const newLine = line.replace(re, '');
+
+                let re = /\d+:\d+\.\d+/g;
+                const times = line.match(re);
+                if (times) {
+                    times.forEach((time, _) => {
+                        let match = time.match(/\\d+:/g);
+                        if (match === null || match.length < 2) {
+                            time = '00:' + time;
+                        }
+                        const seconds = new Date('1970-01-01T' + time + 'Z').getTime() / 1000;
+                        lrcs.set(seconds.toString(), newLine);
+                    });
+                }
+            });
+            this.setState({
+                lrcs: lrcs
+            });
+        };
+        xhr.send();
+    }
+
     progress() {
+        const currentTime = this.audio.currentTime;
         this.setState({
-            completed: Math.round(this.audio.currentTime * (100 / this.audio.duration)),
-            currentTime: this.formatTime(this.audio.currentTime),
+            completed: Math.round(currentTime * (100 / this.audio.duration)),
+            currentTime: this.formatTime(currentTime),
             totalTime: this.formatTime(
                 (this.audio.duration ? this.audio.duration : 0) - 
-                (this.audio.currentTime ? this.audio.currentTime : 0)),
+                (currentTime ? currentTime : 0)),
         });
+
+        if (currentTime !== null && currentTime !== undefined && this.state.lrcs !== null) {
+            this.state.lrcs.forEach((value, key) => {
+                const s = currentTime - parseFloat(key);
+                if (s > 0 && s < 1) {
+                    console.log(`current lrc [${s}] [${value}]`);
+                    this.setState({
+                        currentLRC: value
+                    });
+                }
+            });
+        }
     }
 
     prev() {
@@ -128,12 +176,16 @@ export default class Player extends React.Component {
             playState: true,
             already: true,
             currentMusic: this.state.playList[this.state.index],
+            lrcs: null,
+            currentLRC: '',
+            completed: 0,
         }), () => {
             this.source.src = this.state.currentMusic.url;
             this.source.type = this.state.currentMusic.type;
             this.audio.load();
             this.audio.play();
             document.title = this.state.currentMusic.name;
+            this.loadLRC(this.state.currentMusic.lrc);
         });
     }
 
@@ -236,6 +288,7 @@ export default class Player extends React.Component {
              completed={this.state.completed}
              currentTime={this.state.currentTime}
              totalTime={'-' + this.state.totalTime}
+             lrc={this.state.currentLRC}
              progressLine={this.createProgressLine(this.progressLine)}
              audio={audio}
             />

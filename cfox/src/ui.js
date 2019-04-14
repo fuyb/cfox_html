@@ -85,6 +85,7 @@ export const SongInfo = (props) => {
          <div className="song_playing text-center">
              <div className="song_name"><span key="npSong">{props.songName}</span></div>
              <div className="artist_name"><span key="npArtist">{props.artist}</span></div>
+             <div className="lrc_beta"><span>{props.lrc}</span></div>
          </div>
     );
 };
@@ -129,7 +130,10 @@ export const PlayerContainer = (props) => {
         <div className="player_content">
              <PlayerHeader playState={props.playState} />
              <Album thumb={props.thumb}/>
-             <SongInfo songName={props.songName} artist={props.artist} />
+             <SongInfo
+              songName={props.songName} 
+              artist={props.artist}
+              lrc={props.lrc} />
              <ProgressLineWarp 
               progressLine={props.progressLine}
               totalTime={props.totalTime}
