@@ -3,7 +3,7 @@ import './css/ui.css';
 
 const getStyleName = (props) => {
     if (props.name === "play") {
-        return "glyphicon " + (props.playSate ?  props.childStyleName : props.childPauseStyleName);
+        return "glyphicon " + (props.playSate ?  props.childPauseStyleName : props.childStyleName);
     } else {
         return "glyphicon " + props.childStyleName;
     }
