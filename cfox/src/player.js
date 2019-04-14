@@ -29,7 +29,7 @@ export default class Player extends React.Component {
                     album: 'https://m.yanbin.me/assets/huozhe.png',
                 },
                 {
-                    name: 'Tuvan Internationale.mp3',
+                    name: 'Tuvan Internationale',
                     artist: 'Huun-Huur-Tu',
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/Tuvan-Internationale.mp3',
