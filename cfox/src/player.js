@@ -116,44 +116,63 @@ export default class Player extends React.Component {
         });
 
         if (currentTime !== null && currentTime !== undefined && this.state.lrcs !== null) {
-            this.state.lrcs.forEach((value, key) => {
+            let lastLRC = '';
+            let nextLRC = null;
+            let maxKey = 0;
+            for (let [key, value] of this.state.lrcs.entries()) {
+                /* 找到歌词里最大的一个时间和对应的歌词 */
+                if (parseFloat(key) > maxKey) {
+                    maxKey = parseFloat(key);
+                    lastLRC = value;
+                }
+
+                /* 情况1：当前时间和歌词时间相差小于1s就显示这行歌词 */
                 const s = currentTime - parseFloat(key);
                 if (s > 0 && s < 1) {
-                    console.log(`current lrc [${s}] [${value}]`);
-                    this.setState({
-                        currentLRC: value
-                    });
+                    nextLRC = value;
                 }
-            });
+            }
+
+            /* 情况2：用户拖拽时间轴超过歌词里最大的时间 */
+            if (currentTime > maxKey && nextLRC === null) {
+                nextLRC = lastLRC;
+            }
+
+            /* 上面的情况都没出现 nextLRC===null，不设置 currentLRC */
+            if (nextLRC !== null) {
+                this.setState({
+                    currentLRC: nextLRC
+                });
+            }
         }
-    }
+}
 
-    prev() {
-        this.playNext(-1);
-    }
+prev() {
+    this.playNext(-1);
+}
 
-    next() {
-        this.playNext(1);
-    }
+next() {
+    this.playNext(1);
+}
 
-    ready() {
-        this.setState(() => ({
-            already: false,
-            playState: false,
-        }), () => this.play());
-    }
+ready() {
+    this.setState(() => ({
+        already: false,
+        playState: false,
+    }), () => this.play());
+}
 
-    random() {
-        this.setState(({index, playList, already, playState}) => ({
-            index: Math.floor(Math.random() * this.state.playList.length),
-        }), () => this.ready());
-    }
+random() {
+    this.setState(({index, playList, already, playState}) => ({
+        index: Math.floor(Math.random() * this.state.playList.length),
+    }), () => this.ready());
+}
 
-    playNext(delta) {
-        this.setState(({index, playList, already, playState}) => ({
-            index: Math.max(0, Math.min(playList.length - 1, (index + delta) >= playList.length ? 0 : (index + delta))),
-        }), () => this.ready());
-    }
+playNext(delta) {
+    this.setState(({index, playList, already, playState}) => ({
+        index: Math.max(0, Math.min(playList.length - 1, (index + delta) >= playList.length ? 0 : (index + delta))),
+    }), () => this.ready());
+}
 
     play() {
         if (this.state.already === true && this.state.playState === true) {
