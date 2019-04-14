@@ -82,10 +82,10 @@ export default class Player extends React.Component {
             const lines = xhr.response.split('\n');
             let lrcs = new Map();
             lines.forEach((line, _) => {
-                re = /\[\d+:\d+\.\d+\]/g;
+                let re = /\[\d+:\d+\.\d+\]/g;
                 const newLine = line.replace(re, '');
 
-                let re = /\d+:\d+\.\d+/g;
+                re = /\d+:\d+\.\d+/g;
                 const times = line.match(re);
                 if (times) {
                     times.forEach((time, _) => {
