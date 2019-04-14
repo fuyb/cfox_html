@@ -25,15 +25,15 @@ export default class Player extends React.Component {
                     name: '活着——尘肺工人生命之歌',
                     artist: '今晚吃鱼丸',
                     type: 'audio/mpeg',
-                    url: 'https://t2.yanbin.me/music/huozhe.mp3',
-                    album: 'https://t2.yanbin.me/assets/huozhe.png',
+                    url: 'https://m.yanbin.me/music/huozhe.mp3',
+                    album: 'https://m.yanbin.me/assets/huozhe.png',
                 },
                 {
                     name: 'Tuvan Internationale.mp3',
                     artist: 'Huun-Huur-Tu',
                     type: 'audio/mpeg',
-                    url:'https://t2.yanbin.me/music/Tuvan-Internationale.mp3',
-                    album: 'https://t2.yanbin.me/assets/communism.jpg',
+                    url:'https://m.yanbin.me/music/Tuvan-Internationale.mp3',
+                    album: 'https://m.yanbin.me/assets/communism.jpg',
                 }
             ]
         };
@@ -120,6 +120,7 @@ export default class Player extends React.Component {
             this.source.type = this.state.currentMusic.type;
             this.audio.load();
             this.audio.play();
+            document.title = this.state.currentMusic.name;
         });
     }
 
