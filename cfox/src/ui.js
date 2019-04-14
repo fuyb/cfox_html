@@ -134,3 +134,60 @@ export const PlayerContainer = (props) => {
         </div>
     );
 };
+
+export class MenuBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.member = this.menubar.bind(this);
+        this.fade = this.fade.bind(this);
+        this.openMenu = this.openMenu.bind(this);
+        this.state = {
+            open: false
+        };
+    }
+
+    openMenu() {
+        this.setState(({open}) => ({
+            open: !this.state.open,
+        }));
+    }
+
+    menubar() {
+        return (
+            <div>
+                <div 
+                 className={"hamburger-menu " + (this.state.open ? "slide": "")}
+                 onClick={this.openMenu}
+                >
+                    <div className={"bar " + (this.state.open ? "animate" : "")}></div>
+                </div>
+                <div className={"nav_menu " + (this.state.open ? "open": "")} id="navMenu">
+                    <div className="nav_list">
+                        <div className="nav_item">
+                             <p>Developed by:</p>
+                              <a href="https://github.com/fuyb/cfox_html" target="_blank">fuyb</a>
+                        </div>
+                        <div className="nav_item">
+                             <p>CSS & HTML Developed by:</p>
+                              <a href="https://www.linkedin.com/in/vladislav-kubyshkin-b15b18128" target="_blank">Vladislav Kubyshkin</a>
+                        </div>
+                        <div className="nav_item">
+                              <p>Template designed by:</p>
+                              <a href="https://dribbble.com/rezashintia" target="_blank">Reza Shintia Dewi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    fade() {
+        return (
+            <div className={"player_fade " + (this.state.open ? "player_fade_on" : "")}></div>
+        );
+    }
+
+    render() {
+        return [this.menubar(), this.fade()];
+    }
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Player from './player';
+import {MenuBar} from './ui';
 import './css/ui.css';
 
 class Index extends React.Component {
@@ -23,3 +24,4 @@ class Index extends React.Component {
 }
 
 ReactDOM.render(<Index />, document.querySelector("#app"));
+ReactDOM.render(<MenuBar />, document.querySelector("#menu"));
