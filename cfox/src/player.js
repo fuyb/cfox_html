@@ -51,6 +51,10 @@ export default class Player extends React.Component {
         this.audio.addEventListener('timeupdate', () => this.progress());
         this.audio.addEventListener('error', (e) => this.error(e));
         this.audio.addEventListener('abort', (e) => this.error(e));
+
+        this.setState(({index, playList}) => ({
+            currentMusic: this.state.playList[this.state.index]
+        }));
     }
 
     formatTime(currentTime) {
