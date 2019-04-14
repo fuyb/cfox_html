@@ -54,7 +54,9 @@ export default class Player extends React.Component {
 
         this.setState(({index, playList}) => ({
             currentMusic: this.state.playList[this.state.index]
-        }));
+        }), () => {
+            document.title = this.state.currentMusic.name;
+        });
     }
 
     formatTime(currentTime) {
