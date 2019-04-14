@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Player from './player';
-import './css/ui.css'
+import './css/ui.css';
 
 class Index extends React.Component {
     constructor(props) {

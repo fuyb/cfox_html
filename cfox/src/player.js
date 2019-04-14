@@ -1,7 +1,7 @@
-import React from 'react'
-import {PlayerButton} from './ui'
-import {PlayerContainer} from './ui'
-import {ProgressLine} from './ui'
+import React from 'react';
+import {PlayerButton} from './ui';
+import {PlayerContainer} from './ui';
+import {ProgressLine} from './ui';
 
 export default class Player extends React.Component {
     constructor(props) {
