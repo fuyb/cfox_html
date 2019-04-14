@@ -179,6 +179,8 @@ export default class Player extends React.Component {
             lrcs: null,
             currentLRC: '',
             completed: 0,
+            currentTime: '00:00',
+            totalTime: '00:00',
         }), () => {
             this.source.src = this.state.currentMusic.url;
             this.source.type = this.state.currentMusic.type;
