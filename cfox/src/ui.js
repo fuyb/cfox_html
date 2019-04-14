@@ -92,7 +92,12 @@ export const SongInfo = (props) => {
 export const Album = (props) => {
     return (
         <div className="album_wrap">
-            <div className="no_album_img">
+            <div className="no_album_img"
+                 style={{
+                     backgroundImage: "url(" + 
+                         (props.thumb === null ? "https://m.yanbin.me/assets/default_album.jpeg" : "") + 
+                     ")"
+                 }}>
                 <div className="jAudio--thumb" style={{backgroundImage: "url(" + props.thumb + ")"}}>
                 </div>
             </div>
