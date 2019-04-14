@@ -37,7 +37,7 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/Tuvan-Internationale.mp3',
                     album: 'https://m.yanbin.me/assets/communism.jpg',
-                    lrc: 'https://t2.yanbin.me/huozhe.lrc',
+                    lrc: '/assets/internationale.lrc',
                 },
                 {
                     name: '卡尔',
@@ -45,7 +45,7 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/kar.mp3',
                     album: 'https://m.yanbin.me/assets/kar.jpg',
-                    lrc: '/assets/huozhe.lrc',
+                    lrc: null,
                 }
             ]
         };
@@ -185,7 +185,9 @@ export default class Player extends React.Component {
             this.audio.load();
             this.audio.play();
             document.title = this.state.currentMusic.name;
-            this.loadLRC(this.state.currentMusic.lrc);
+            if (this.state.currentMusic.lrc) {
+                this.loadLRC(this.state.currentMusic.lrc);
+            }
         });
     }
 
