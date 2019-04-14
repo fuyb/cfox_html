@@ -85,6 +85,7 @@ export const SongInfo = (props) => {
          <div className="song_playing text-center">
              <div className="song_name"><span key="npSong">{props.songName}</span></div>
              <div className="artist_name"><span key="npArtist">{props.artist}</span></div>
+             <br/>
              <div className="lrc_beta"><span>{props.lrc}</span></div>
          </div>
     );
