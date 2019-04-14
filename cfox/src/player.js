@@ -34,6 +34,13 @@ export default class Player extends React.Component {
                     type: 'audio/mpeg',
                     url:'https://m.yanbin.me/music/Tuvan-Internationale.mp3',
                     album: 'https://m.yanbin.me/assets/communism.jpg',
+                },
+                {
+                    name: '卡尔',
+                    artist: '白曼',
+                    type: 'audio/mpeg',
+                    url:'https://m.yanbin.me/music/kar.mp3',
+                    album: 'https://m.yanbin.me/assets/kar.jpg',
                 }
             ]
         };
