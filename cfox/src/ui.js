@@ -175,15 +175,15 @@ export class MenuBar extends React.Component {
                     <div className="nav_list">
                         <div className="nav_item">
                              <p>Developed by:</p>
-                              <a href="https://github.com/fuyb/cfox_html" target="_blank">fuyb</a>
+                              <a href="https://github.com/fuyb/cfox_html" rel="noopener noreferrer" target="_blank">fuyb</a>
                         </div>
                         <div className="nav_item">
                              <p>CSS & HTML Developed by:</p>
-                              <a href="https://www.linkedin.com/in/vladislav-kubyshkin-b15b18128" target="_blank">Vladislav Kubyshkin</a>
+                              <a href="https://www.linkedin.com/in/vladislav-kubyshkin-b15b18128" rel="noopener noreferrer" target="_blank">Vladislav Kubyshkin</a>
                         </div>
                         <div className="nav_item">
                               <p>Template designed by:</p>
-                              <a href="https://dribbble.com/rezashintia" target="_blank">Reza Shintia Dewi</a>
+                              <a href="https://dribbble.com/rezashintia" rel="noopener noreferrer" target="_blank">Reza Shintia Dewi</a>
                         </div>
                     </div>
                 </div>
