@@ -64,9 +64,12 @@ export default class Player extends React.Component {
         });
     }
 
-    formatTime(currentTime) {
-        let min = Math.floor(currentTime / 60);
-        let sec = Math.floor(currentTime % 60);
+    formatTime(time) {
+        if (isNaN(time)) 
+            return '00:00';
+
+        let min = Math.floor(time / 60);
+        let sec = Math.floor(time % 60);
         min = min < 10 ? '0' + min : min;
         sec = sec < 10 ? '0' + sec : sec;
         return `${min}:${sec}`;
@@ -106,16 +109,15 @@ export default class Player extends React.Component {
     }
 
     progress() {
-        const currentTime = this.audio.currentTime;
+        const currentTime = parseFloat(this.audio.currentTime);
+        const completed = Math.round(currentTime * (100 / this.audio.duration));
         this.setState({
-            completed: Math.round(currentTime * (100 / this.audio.duration)),
+            completed: completed ? completed : 0,
             currentTime: this.formatTime(currentTime),
-            totalTime: this.formatTime(
-                (this.audio.duration ? this.audio.duration : 0) - 
-                (currentTime ? currentTime : 0)),
+            totalTime: this.formatTime(this.audio.duration - currentTime),
         });
 
-        if (currentTime !== null && currentTime !== undefined && this.state.lrcs !== null) {
+        if (!isNaN(currentTime) && this.state.lrcs !== null) {
             let lastLRC = '';
             let nextLRC = null;
             let maxKey = 0;
