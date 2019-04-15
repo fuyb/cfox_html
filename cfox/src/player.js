@@ -225,13 +225,14 @@ playNext(delta) {
     }
 
     mouseMove(e) {
+        if (!this.audio) return ;
+
         const bodyRect = document.body.getBoundingClientRect();
         const elemRect = this.progressLine.current.getBoundingClientRect();
         const offset   = elemRect.left - bodyRect.left;
         const length = elemRect.right - elemRect.left;
-        if (this.audio && this.audio.duration) {
-            this.audio.currentTime = ((e.clientX - offset) / length) * this.audio.duration;
-        }
+        const time = ((e.clientX - offset) / length) * this.audio.duration;
+        this.audio.currentTime = !isNaN(time) ? time : 0;
     }
 
     mouseUp() {
