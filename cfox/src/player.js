@@ -68,11 +68,19 @@ export default class Player extends React.Component {
         if (isNaN(time)) 
             return '00:00';
 
+        let hour = '';
         let min = Math.floor(time / 60);
         let sec = Math.floor(time % 60);
+        if (min >= 60) {
+            hour = Math.floor(min / 60);
+            min = Math.floor(min % 60);
+            hour = hour < 10 ? '0' + hour : hour;
+            hour += ':';
+        }
+
         min = min < 10 ? '0' + min : min;
         sec = sec < 10 ? '0' + sec : sec;
-        return `${min}:${sec}`;
+        return `${hour}${min}:${sec}`;
     }
 
     error(e) {
