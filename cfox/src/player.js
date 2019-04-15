@@ -82,25 +82,30 @@ export default class Player extends React.Component {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.onload = (event) => {
-            const lines = xhr.response.split('\n');
             let lrcs = new Map();
-            lines.forEach((line, _) => {
-                let re = /\[\d+:\d+\.\d+\]/g;
+            const lines = xhr.response.split('\n');
+            for(let line of lines) {
+                let re = /\d+:\d+\.\d+/g;
+                const times = line.match(re);
+                if (!times)
+                    continue;
+
+                re = /\[\d+:\d+\.\d+\]/g;
                 const newLine = line.replace(re, '');
 
-                re = /\d+:\d+\.\d+/g;
-                const times = line.match(re);
-                if (times) {
-                    times.forEach((time, _) => {
-                        let match = time.match(/\\d+:/g);
-                        if (match === null || match.length < 2) {
-                            time = '00:' + time;
-                        }
-                        const seconds = new Date('1970-01-01T' + time + 'Z').getTime() / 1000;
-                        lrcs.set(seconds.toString(), newLine);
-                    });
+                for (let time of times) {
+                    let match = time.match(/\\d+:/g);
+                    if (!match)
+                        continue;
+
+                    if (match.length < 2) {
+                        time = '00:' + time;
+                    }
+                    time = this.formatLRCTime(time);
+                    const seconds = new Date('1970-01-01T' + time + 'Z').getTime() / 1000;
+                    lrcs.set(seconds.toString(), newLine);
                 }
-            });
+            }
             this.setState({
                 lrcs: lrcs
             });
