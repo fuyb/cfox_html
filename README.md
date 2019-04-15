@@ -16,3 +16,9 @@
 ### HTML 模板开发者
 [Reza Shintia Dewi](https://dribbble.com/rezashintia)
 
+## 预览
+### 浏览器
+![浏览器](https://pic.yanbin.me/63/26b29bc596eca4e182b6437a8075a27860cda8.png)
+
+### 移动端
+![移动端](https://pic.yanbin.me/a4/28a2e69710f7d18d9bcefca3f406cb45e0d1e9.jpg)
