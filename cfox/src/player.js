@@ -83,6 +83,22 @@ export default class Player extends React.Component {
         return `${hour}${min}:${sec}`;
     }
 
+    formatLRCTime(time) {
+        /* HH:MM:SS.MS */
+        let times = time.split(':');
+        const hour = parseInt(times[0]);
+        const seconds = hour * 3600 + parseInt(times[1]) * 60 + parseInt(times[2]);
+        let ftime = this.formatTime(seconds);
+        times = time.split('.');
+        if (times.length >= 2) {
+            ftime = ftime + '.' + times[1];
+        }
+        if (hour === 0) {
+            ftime = '00:' + ftime;
+        }
+        return ftime;
+    }
+
     error(e) {
     }
 
@@ -102,7 +118,7 @@ export default class Player extends React.Component {
                 const newLine = line.replace(re, '');
 
                 for (let time of times) {
-                    let match = time.match(/\\d+:/g);
+                    let match = time.match(/\d+:/g);
                     if (!match)
                         continue;
 
