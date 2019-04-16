@@ -176,34 +176,34 @@ export default class Player extends React.Component {
                 });
             }
         }
-}
+    }
 
-prev() {
-    this.playNext(-1);
-}
+    prev() {
+        this.playNext(-1);
+    }
 
-next() {
-    this.playNext(1);
-}
+    next() {
+        this.playNext(1);
+    }
 
-ready() {
-    this.setState(() => ({
-        already: false,
-        playState: false,
-    }), () => this.play());
-}
+    ready() {
+        this.setState(() => ({
+            already: false,
+            playState: false,
+        }), () => this.play());
+    }
 
-random() {
-    this.setState(({index, playList, already, playState}) => ({
-        index: Math.floor(Math.random() * this.state.playList.length),
-    }), () => this.ready());
-}
+    random() {
+        this.setState(({index, playList, already, playState}) => ({
+            index: Math.floor(Math.random() * this.state.playList.length),
+        }), () => this.ready());
+    }
 
-playNext(delta) {
-    this.setState(({index, playList, already, playState}) => ({
-        index: Math.max(0, Math.min(playList.length - 1, (index + delta) >= playList.length ? 0 : (index + delta))),
-    }), () => this.ready());
-}
+    playNext(delta) {
+        this.setState(({index, playList, already, playState}) => ({
+            index: Math.max(0, Math.min(playList.length - 1, (index + delta) >= playList.length ? 0 : (index + delta))),
+        }), () => this.ready());
+    }
 
     play() {
         if (this.state.already === true && this.state.playState === true) {
