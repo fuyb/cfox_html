@@ -15,6 +15,7 @@ export default class Player extends React.Component {
         this.state = {
             already: false,
             playState: false,
+            looped: false,
             index: 0,
             completed: 0,
             currentTime: '00:00',
@@ -51,8 +52,16 @@ export default class Player extends React.Component {
         };
     }
 
+    ended() {
+        if (!this.state.repeat) {
+            this.next();
+        } else {
+            this.playNext(0);
+        }
+    }
+
     componentDidMount() {
-        this.audio.addEventListener('ended', () => this.next());
+        this.audio.addEventListener('ended', () => this.ended());
         this.audio.addEventListener('timeupdate', () => this.progress());
         this.audio.addEventListener('error', (e) => this.error(e));
         this.audio.addEventListener('abort', (e) => this.error(e));
@@ -184,6 +193,12 @@ export default class Player extends React.Component {
 
     next() {
         this.playNext(1);
+    }
+
+    repeat() {
+        this.setState(({repeat}) => ({
+            repeat: !repeat
+        }));
     }
 
     ready() {
@@ -321,7 +336,7 @@ export default class Player extends React.Component {
               styleName='repeat_btn'
               childId='repeat-child'
               childStyleName='glyphicon-retweet'
-              onClick={() => this.next()}/>,
+              onClick={() => this.repeat()}/>,
         ];
 
         const source = React.createElement('source', {
