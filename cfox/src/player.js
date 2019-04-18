@@ -156,20 +156,19 @@ export default class Player extends React.Component {
         });
 
         if (!isNaN(currentTime) && this.state.lrcs !== null) {
-            let lastLRC = '';
             let nextLRC = null;
-            let maxKey = 0;
-            for (let [key, value] of this.state.lrcs.entries()) {
-                /* 找到歌词里最大的一个时间和对应的歌词 */
-                if (parseFloat(key) > maxKey) {
-                    maxKey = parseFloat(key);
-                    lastLRC = value;
-                }
+            /* 找到歌词里最大的一个时间和对应的歌词 */
+            let maxKey = Math.max.apply(null,
+                [...this.state.lrcs.keys()].map(key => parseFloat(key))
+            );
+            let lastLRC = this.state.lrcs.get(maxKey.toString());
 
+            for (let [key, value] of this.state.lrcs.entries()) {
                 /* 情况1：当前时间和歌词时间相差小于1s就显示这行歌词 */
                 const s = currentTime - parseFloat(key);
                 if (s > 0 && s < 1) {
                     nextLRC = value;
+                    break;
                 }
             }
 
